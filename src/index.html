@@ -24,12 +24,23 @@
                 labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
                 datasets: [{
                     label: 'Temperature (°C)',
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)', // Background color of the data area
+                    backgroundColor: [], // Background color of the data area
                     borderColor: 'rgba(255, 99, 132, 1)', // Border color of the data area
                     borderWidth: 1,
                     data: [7, 8, 11, 15, 18, 22, 25], // Sample temperature values
                 }]
             };
+
+            // Loop through the data and set background colors based on thresholds
+            temperatureData.datasets[0].data.forEach((value) => {
+                if (value < 10) {
+                    temperatureData.datasets[0].backgroundColor.push('rgba(255, 255, 0, 0.2)'); // Yellow
+                } else if (value > 20) {
+                    temperatureData.datasets[0].backgroundColor.push('rgba(255, 0, 0, 0.2)'); // Red
+                } else {
+                    temperatureData.datasets[0].backgroundColor.push('rgba(255, 99, 132, 0.2)'); // Default color
+                }
+            });
 
             // Get the canvas element for the chart
             const ctx = document.getElementById('temperatureChart').getContext('2d');
