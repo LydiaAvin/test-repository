@@ -5,20 +5,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-    <title>Vanilla JavaScript </title>
+    <title>Temperature Graph</title>
+    <!-- Add Chart.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
     <main>
-    <h1>Vanilla JavaScript</h1>
-    <p>Loading content from the API: <b id="name">...</b></p>
+        <h1>Temperature Graph</h1>
+        <!-- Canvas element to render the chart -->
+        <canvas id="temperatureChart" width="400" height="200"></canvas>
     </main>
 
     <script>
-    (async function() {
-        const { text } = await( await fetch(`/api/message`)).json();
-        document.querySelector('#name').textContent = text;
-    }());
+        (async function() {
+            // Dummy temperature data for demonstration
+            const temperatureData = {
+                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+                datasets: [{
+                    label: 'Temperature (°C)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)', // Background color of the data area
+                    borderColor: 'rgba(255, 99, 132, 1)', // Border color of the data area
+                    borderWidth: 1,
+                    data: [7, 8, 11, 15, 18, 22, 25], // Sample temperature values
+                }]
+            };
+
+            // Get the canvas element for the chart
+            const ctx = document.getElementById('temperatureChart').getContext('2d');
+
+            // Create the chart
+            const temperatureChart = new Chart(ctx, {
+                type: 'line', // Line chart type
+                data: temperatureData,
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+        })();
     </script>
 </body>
 
